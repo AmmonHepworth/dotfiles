@@ -29,7 +29,7 @@ autocmd BufNewfile,BufReadPost *.ino,*.pde set filetype =cpp
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set noexpandtab
+set expandtab
 
 
 
@@ -52,6 +52,9 @@ imap <F2> <Esc><F1>a
 nmap <leader>rv :source $MYVIMRC<CR>  
 
 
+set autoread
+autocmd FileType javascript noremap <C-F> <ESC>:w<CR>:!eslint --fix '%:p'<CR>
+
 
 
 "-------------SWAP FILE SHIT---------------"
@@ -62,6 +65,8 @@ set noswapfile
 set number
 
 "================AUTO EXECUTE=============="
+"
+let mapleader="\<Space>"
 augroup configgroup
 autocmd!
 autocmd FileType tex nmap <F3> :w<CR> :!latex '%:t'<CR>
@@ -75,3 +80,49 @@ autocmd FileType python nmap <F3> :w<CR> :!python '%:t'<CR>
 autocmd FileType python imap <F3> <ESC>:w<CR> :!python '%:t'<CR>
 
 augroup END
+
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'octol/vim-cpp-enhanced-highlight'
+call plug#end()
+
+
+"=========SYNTASTIC========="
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_cpp_compiler = "g++"
+let g:syntastic_cpp_compiler_options = " -std=c++17 -Wall -Wextra -Wpedantic"
+
+let g:syntastic_javascript_checkers = ['eslint']
+
+
+"========NERDTREE========="
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
+
+"======AIRLINE========
+let g:airline#extensions#tabline#enabled = 2
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='powerlineish'
