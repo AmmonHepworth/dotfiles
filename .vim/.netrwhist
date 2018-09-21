@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/home/ammon/.vim'
+let g:netrw_dirhist_2='/home/ammon/Documents/school/math5620/5and9stencil'
+let g:netrw_dirhist_3='/home/ammon/Documents/school/cs3450/QuestLine/Screens'
+let g:netrw_dirhist_4='/home/ammon/Documents/school/cs3450/QuestLine/.git'
+let g:netrw_dirhist_5='/home/ammon/temp/autojump_v21.1.2'
